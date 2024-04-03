@@ -6,7 +6,7 @@
 #    By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/06 10:28:10 by jerperez          #+#    #+#              #
-#    Updated: 2024/04/03 11:22:03 by jerperez         ###   ########.fr        #
+#    Updated: 2024/04/03 15:05:20 by jerperez         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,31 +34,18 @@ _COLOR_YELLOW=\033[33m
 
 ###############################################
 
-#PNG=philo.png
-#PNGX=$$(tput cols)
-
-#_PIC64=
-
-###############################################
-
 all: $(NAME)
+
+$(NAME): $(OBJS)
+	@$(CXX) $(CPPFLAGS) -o $@ $^
+	@echo "$(_COLOR_GREEN)Ready to use $(_COLOR_BOLD)$(NAME) !$(_COLOR_END)"
 
 -include $(OBJS:.o=.d)
 
 $(OBJ_DIR)/%.o: %.cpp
 	@echo Compiling: $<
 	@mkdir -p $(@D)
-	@$(CXX) $(CPPFLAGS) -c -o $@ $<
-	@$(CXX) -MM $(CPPFLAGS) $< > $(@D)/$*.d
-	@mv -f $(@D)/$*.d $(@D)/$*.d.tmp
-	@sed -e 's|.*:|$*.o:|' < $(@D)/$*.d.tmp > $(@D)/$*.d
-	@sed -e 's/.*://' -e 's/\\$$//' < $(@D)/$*.d.tmp | fmt -1 | \
-	  sed -e 's/^ *//' -e 's/$$/:/' >> $(@D)/$*.d
-	@rm -f $(@D)/*.d.tmp
-
-$(NAME): $(OBJS)
-	@$(CXX) $(CPPFLAGS) -o $@ $^
-	@echo "$(_COLOR_GREEN)Ready to use $(_COLOR_BOLD)$(NAME) !$(_COLOR_END)"
+	@$(CXX) $(CPPFLAGS) -MMD -MP -c -o $@ $<
 
 clean:
 	@rm -rf $(OBJ_DIR)/
