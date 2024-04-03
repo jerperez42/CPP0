@@ -6,7 +6,7 @@
 #    By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/06 10:28:10 by jerperez          #+#    #+#              #
-#    Updated: 2024/02/07 15:23:19 by jerperez         ###   ########.fr        #
+#    Updated: 2024/04/03 15:26:07 by jerperez         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,32 +33,18 @@ _COLOR_YELLOW=\033[33m
 
 ###############################################
 
-#PNG=philo.png
-#PNGX=$$(tput cols)
-
-#_PIC64=
-
-###############################################
-
 all: $(NAME)
+
+$(NAME): $(OBJS)
+	@$(CXX) $(CPPFLAGS) -o $@ $^
+	@echo "$(_COLOR_GREEN)Ready to use $(_COLOR_BOLD)$(NAME) !$(_COLOR_END)"
+
+-include $(OBJS:.o=.d)
 
 $(OBJ_DIR)/%.o: %.cpp
 	@echo Compiling: $<
 	@mkdir -p $(@D)
-	@$(CXX) $(CPPFLAGS) -c -o $@ $<
-
-$(NAME): $(OBJS)
-	@$(CXX) $(CPPFLAGS) -o $@ $^
-ifdef _PIC64
-ifdef PNG
-ifneq ($(PNGX), )
-	@echo "$(_PIC64)" | base64 -d > $(PNG)
-	@chafa $(PNG) -s $(PNGX)
-	@rm $(PNG)
-endif
-endif
-endif
-	@echo "$(_COLOR_GREEN)Ready to use $(_COLOR_BOLD)$(NAME) !$(_COLOR_END)"
+	@$(CXX) $(CPPFLAGS) -MMD -MP -c -o $@ $<
 
 clean:
 	@rm -rf $(OBJ_DIR)/
