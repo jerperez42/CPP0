@@ -6,7 +6,7 @@
 /*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:35:21 by jerperez          #+#    #+#             */
-/*   Updated: 2024/04/03 14:30:53 by jerperez         ###   ########.fr       */
+/*   Updated: 2024/04/03 14:39:31 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # define CMD_CADD "ADD"
 # define CMD_SRCH "SEARCH"
 # define CMD_EXIT "EXIT"
+# define EXIT_MSG "exit"
 
 static void	_ui_clear(void)
 {
@@ -52,14 +53,12 @@ static int	_ui_loop(PhoneBook book)
 	{
 		_ui_prompt();
 		std::getline(std::cin, cmd);
-		if (true == std::cin.eof())
+		if (cmd_exit == cmd || true == std::cin.eof())
 			return (EXIT_SUCCESS);
-		else if (0 == cmd.compare(cmd_cadd))
+		else if (cmd_cadd == cmd)
 			book.add();
-		else if (0 == cmd.compare(cmd_srch))
+		else if (cmd_srch == cmd)
 			book.search();
-		else if (0 == cmd.compare(cmd_exit))
-			return (EXIT_SUCCESS);
 		else
 			_ui_write_error(cmd);
 		std::cout << std::endl << std::endl;
@@ -74,5 +73,7 @@ int	main(int ac, char **av)
 	(void)ac;
 	(void)av;
 
-	return (_ui_loop(book));
+	_ui_loop(book);
+	std::cout << EXIT_MSG << std::endl;
+	return (EXIT_SUCCESS);
 }
