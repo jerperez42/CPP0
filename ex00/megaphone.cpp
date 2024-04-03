@@ -6,27 +6,48 @@
 /*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:21:53 by jerperez          #+#    #+#             */
-/*   Updated: 2024/02/06 11:18:45 by jerperez         ###   ########.fr       */
+/*   Updated: 2024/04/03 12:59:52 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include <iostream>
 # include <algorithm>
 
-# define MSG_NO_ARGS "* LOUD AND UNBEARABLE FEEDBACK NOISE *"
+# define MEGA_DFLT_MSG "* LOUD AND UNBEARABLE FEEDBACK NOISE *"
+# define MEGA_SEP ' '
 
-int	main(int ac, char **av)
+static void	_write_default_msg(void)
+{
+	std::cout << MEGA_DFLT_MSG;
+}
+
+static void	_write_newline(void)
+{
+	std::cout << std::endl;
+}
+
+static void	_write_toupper(std::string str)
+{
+	std::transform(str.begin(), str.end(), str.begin(), ::toupper);
+	std::cout << str;
+}
+
+static void	_write_words(char *words[])
+{
+	while (*words)
+	{
+		_write_toupper(*words);
+		if (*(++words))
+			std::cout << MEGA_SEP;
+	}
+}
+
+int	main(int ac, char *av[])
 {
 	if (1 == ac)
-		std::cout << MSG_NO_ARGS;
-	for (int i = 1; i < ac; i++)
-	{
-		std::string str = av[i];
-		std::transform(str.begin(), str.end(), str.begin(), ::toupper);
-		std::cout << str;
-		if ((i + 1) != ac)
-			std::cout << ' ';
-	}
-	std::cout << std::endl;
-	return (0);
+		_write_default_msg();
+	else
+		_write_words(++av);
+	_write_newline();
+	return (EXIT_SUCCESS);
 }
