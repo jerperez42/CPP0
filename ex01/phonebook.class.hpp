@@ -6,7 +6,7 @@
 /*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:17:17 by jerperez          #+#    #+#             */
-/*   Updated: 2024/02/07 13:43:18 by jerperez         ###   ########.fr       */
+/*   Updated: 2024/04/03 16:00:53 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ public:
 	void	search(void);
 	void	exit(void);
 private:
-	//void	display_row_header(void);
 	Contact	_phonebook[PBK_SIZE];
 	t_field	_info[INF_NFLD];
 	t_index	_used;	

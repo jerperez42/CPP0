@@ -6,7 +6,7 @@
 /*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:24:29 by jerperez          #+#    #+#             */
-/*   Updated: 2024/02/07 13:43:49 by jerperez         ###   ########.fr       */
+/*   Updated: 2024/04/03 16:00:44 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@
 PhoneBook::PhoneBook(void)
 {
 	_used = 0;
-	// for (int i = 0; i < PBK_SIZE; i++)
-	// 	_phonebook[i] = new Contact(PBK_NFLD, _field);
 }
 
 void	PhoneBook::add(void)
@@ -30,11 +28,14 @@ void	PhoneBook::add(void)
 		PRPT_F_F, PRPT_F_L, PRPT_F_N, PRPT_F_P, PRPT_F_D};
 	t_field		index;
 	char 		buff[CIN_BUFF] = {0};
+	int			curr;
 
+
+	curr = (PBK_SIZE == _used) ? PBK_SIZE - 1 : _used;
 	std::cout << PRPT_MSG << std::endl;
 	for (int i = 0; i < INF_NFLD; i++)
 	{
-		index = _phonebook[0].index_to_field("[", _used, "]");
+		index = _phonebook[0].index_to_field("[", curr, "]");
 		std::cout << field_prompt[i] << index << ADD_ISEP;
 		std::cin.clear();
 		std::cin.getline(buff, CIN_BUFF);
@@ -45,7 +46,7 @@ void	PhoneBook::add(void)
 			return ;
 		}
 	}
-	_phonebook[_used].update_information(_info);
+	_phonebook[curr].update_information(_info);
 	std::cout << ADD_M_OK << std::endl;
 	if (_used < PBK_SIZE)
 		_used++;
