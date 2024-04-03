@@ -6,7 +6,7 @@
 /*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:24:29 by jerperez          #+#    #+#             */
-/*   Updated: 2024/02/07 11:35:36 by jerperez         ###   ########.fr       */
+/*   Updated: 2024/04/03 13:06:11 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,22 +26,6 @@ Contact::Contact(void)
 	_phone = field;
 	_secret = field;
 }
-
-// Contact&	Contact::operator=(const Contact& other)
-// {
-// 	if (this != &other)
-// 		std::copy(other._first, other._last, other._nick, other._phone, other._secret);
-// 	return (*this);
-// }
-
-// void	Contact::update_field(char *field, std::string str)
-// {
-// 	typedef std::basic_string<char>::size_type	t_size;
-
-// 	(void)field;
-// 	(void)str;
-// 	;
-// }
 
 void	Contact::update_information(t_field *value)
 {

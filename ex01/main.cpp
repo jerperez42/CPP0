@@ -6,7 +6,7 @@
 /*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:35:21 by jerperez          #+#    #+#             */
-/*   Updated: 2024/02/07 13:16:08 by jerperez         ###   ########.fr       */
+/*   Updated: 2024/04/03 13:08:40 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@
 # define CMD_SRCH "SEARCH"
 # define CMD_EXIT "EXIT"
 
-static void	main_cls(void)
+static void	_clear_screen(void)
 {
 	std::cout << "\033[2J" << "\033[H";
 }
 
-static int	main_loop(PhoneBook book)
+static int	_ui_loop(PhoneBook book)
 {
 	char		buff[CIN_BUFF] = {0};
 	std::string	cmd_cadd(CMD_CADD);
@@ -32,7 +32,7 @@ static int	main_loop(PhoneBook book)
 	std::string	cmd_exit(CMD_EXIT);
 	std::string	cmd;
 
-	main_cls();
+	_clear_screen();
 	while (1)
 	{
 		std::cout << PRPT_CMD;
@@ -50,6 +50,7 @@ static int	main_loop(PhoneBook book)
 			std::cout << PRPT_CER << cmd << std::endl;
 		std::cout << std::endl;
 	}
+	return (EXIT_SUCCESS);
 }
 
 int	main(int ac, char **av)
@@ -59,5 +60,5 @@ int	main(int ac, char **av)
 	(void)ac;
 	(void)av;
 
-	return (main_loop(book));
+	return (_ui_loop(book));
 }
