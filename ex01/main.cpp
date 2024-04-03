@@ -6,12 +6,13 @@
 /*   By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:35:21 by jerperez          #+#    #+#             */
-/*   Updated: 2024/04/03 13:08:40 by jerperez         ###   ########.fr       */
+/*   Updated: 2024/04/03 13:12:54 by jerperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "phonebook.class.hpp"
 #include <stdio.h>
+#include <cstdlib>
 
 # define PRPT_CMD "Enter one of the three commands:"
 # define PRPT_CER "The program only accepts ADD, SEARCH and EXIT\nYou entered:"
