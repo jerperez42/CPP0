@@ -6,7 +6,7 @@
 #    By: jerperez <jerperez@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/06 10:28:10 by jerperez          #+#    #+#              #
-#    Updated: 2024/02/06 10:42:46 by jerperez         ###   ########.fr        #
+#    Updated: 2024/04/03 11:22:03 by jerperez         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,8 @@ OBJ_DIR	=	obj
 
 OBJ		= 	$(SRCS:.cpp=.o)
 OBJS	= 	$(addprefix $(OBJ_DIR)/, $(OBJ))
+
+DEPS    =	$(OBJS:.o=.d)
 
 ###############################################
 
@@ -41,22 +43,21 @@ _COLOR_YELLOW=\033[33m
 
 all: $(NAME)
 
+-include $(OBJS:.o=.d)
+
 $(OBJ_DIR)/%.o: %.cpp
 	@echo Compiling: $<
 	@mkdir -p $(@D)
 	@$(CXX) $(CPPFLAGS) -c -o $@ $<
+	@$(CXX) -MM $(CPPFLAGS) $< > $(@D)/$*.d
+	@mv -f $(@D)/$*.d $(@D)/$*.d.tmp
+	@sed -e 's|.*:|$*.o:|' < $(@D)/$*.d.tmp > $(@D)/$*.d
+	@sed -e 's/.*://' -e 's/\\$$//' < $(@D)/$*.d.tmp | fmt -1 | \
+	  sed -e 's/^ *//' -e 's/$$/:/' >> $(@D)/$*.d
+	@rm -f $(@D)/*.d.tmp
 
 $(NAME): $(OBJS)
 	@$(CXX) $(CPPFLAGS) -o $@ $^
-ifdef _PIC64
-ifdef PNG
-ifneq ($(PNGX), )
-	@echo "$(_PIC64)" | base64 -d > $(PNG)
-	@chafa $(PNG) -s $(PNGX)
-	@rm $(PNG)
-endif
-endif
-endif
 	@echo "$(_COLOR_GREEN)Ready to use $(_COLOR_BOLD)$(NAME) !$(_COLOR_END)"
 
 clean:
